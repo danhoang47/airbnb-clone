@@ -1,0 +1,23 @@
+
+// 1433px - 40px | 80px
+// 744px - 24px
+
+
+.container {
+    padding-left: 5em;
+    padding-right: 5em;
+}
+
+@media (max-width: 1432px) and (min-width: 745px) {
+    .container {
+        padding-left: 2.5em;
+        padding-right: 2.5em;
+    }
+}
+
+@media (max-width: 744px) {
+    .container {
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+    }
+}
