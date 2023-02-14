@@ -7,6 +7,8 @@ import Image from './Image';
 import Modal from "./Modal";
 import Box from "./Box";
 import Divider from "./Divider";
+import Logo from "./Logo";
+import DatePicker from "./DatePicker";
 
 export {
     Container,
@@ -17,5 +19,7 @@ export {
     Image,
     Modal,
     Box,
-    Divider
+    Divider,
+    Logo,
+    DatePicker
 } 

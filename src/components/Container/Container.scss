@@ -6,8 +6,13 @@
 .container {
     padding-left: 5em;
     padding-right: 5em;
+
+    .fixed {
+        padding: 0;
+    }
 }
 
+// fluid
 @media (max-width: 1432px) and (min-width: 745px) {
     .container {
         padding-left: 2.5em;
@@ -19,5 +24,51 @@
     .container {
         padding-left: 1.5em;
         padding-right: 1.5em;
+    }
+}
+
+// fixed
+@media (min-width: 1200px) {
+    .container {
+        
+        &.fixed {
+            width: 71.25em;
+        }
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .container {
+        
+        &.fixed {
+            width: 60em;
+        }
+    }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+    .container {
+        
+        &.fixed {
+            width: 45em;
+        }
+    }
+}
+
+@media (max-width: 767px) and (min-width: 576px) {
+    .container {
+        
+        &.fixed {
+            width: 33.75em;
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .container {
+        
+        &.fixed {
+            width: 100%;
+        }
     }
 }

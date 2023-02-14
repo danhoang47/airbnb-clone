@@ -9,3 +9,16 @@ export type Hotel = {
     hotelType: number,
     price: number
 }
+
+export type DateRange = {
+    from: Date,
+    to: Date
+}
+
+export type DatePickerProps = {
+    defaultMonth?: number,
+    onSelect: (date: Date) => void,
+    disabledDates?: (string | Date)[],
+    selectedDates: DateRange;
+    mode?: 'single' | 'range'
+}

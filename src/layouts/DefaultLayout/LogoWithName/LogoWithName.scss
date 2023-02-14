@@ -1,0 +1,12 @@
+@use 'src/assets/mixins';
+@use 'src/assets/variables';
+
+.logo-with-name {
+    color: variables.$main-color;
+    font-size: 2.4em;
+
+    .website-name {
+        font-weight: 700;
+        font-size: 1.6rem;
+    }
+}

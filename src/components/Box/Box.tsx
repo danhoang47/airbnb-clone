@@ -1,14 +1,17 @@
 import { CSSProperties, ReactNode } from "react";
+import { cx } from "@shared/utils";
+import './Box.scss'
 
 type BoxProps = {
     sx?: CSSProperties,
     children?: ReactNode,
-    className: string
+    classNames?: string[]
 }
 
-function Box({ sx, children, className }: BoxProps) {
+function Box({ sx, children, classNames = []}: BoxProps) {
+
     return (  
-        <div style={sx} className={className}>
+        <div style={sx} className={cx(['box', ...classNames])}>
             {children}
         </div>
     );

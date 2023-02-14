@@ -13,3 +13,7 @@
     @include d-flex();
     align-items: center;
 }
+
+@mixin border-bttm {
+    border-bottom: 1px solid #ebebeb;
+}

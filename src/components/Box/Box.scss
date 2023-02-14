@@ -1,0 +1,13 @@
+@use 'src/assets/variables';
+@use 'src/assets/mixins';
+
+.box {
+
+    &.main-color {
+        color: variables.$main-color;
+    }
+
+    &.d-flex-v-center {
+        @include mixins.d-flex-v-center;
+    }
+}

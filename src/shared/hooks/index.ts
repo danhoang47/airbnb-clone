@@ -1,4 +1,4 @@
-import useAnimation from "./useAnimation";
+import useAnimation from "./use-animation";
 
 export {
     useAnimation

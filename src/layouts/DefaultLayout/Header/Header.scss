@@ -1,0 +1,16 @@
+@use 'src/assets/mixins';
+
+.header {
+    height: 5rem;
+    @include mixins.border-bttm;
+
+    .header-container {
+        @include mixins.d-flex-v-center;
+        justify-content: space-between;
+        height: 5em;
+
+        > * {
+            flex: 1 0 0;
+        }
+    }
+}

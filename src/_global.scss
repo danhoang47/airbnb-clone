@@ -20,6 +20,6 @@ button, button:focus, input, input:focus {
 }
 
 // reset style for a tag
-a {
-
+a, a:hover, a:visited {
+    all: unset;
 }
