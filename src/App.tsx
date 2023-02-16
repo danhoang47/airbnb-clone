@@ -1,13 +1,10 @@
-import "./_global.scss"
-import { Outlet } from 'react-router-dom';
-import { Box } from "@/components";
+import "./index.css";
 
 function App() {
-
-    return (
-        <Box classNames={["App"]}>
-            <Outlet />
-        </Box>
+    return (  
+        <div className="">
+            Hello, World
+        </div>
     );
 }
 
