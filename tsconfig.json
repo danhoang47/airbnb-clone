@@ -16,14 +16,12 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@shared/*": ["./src/shared/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@router": ["./src/core/router"],
+      "@layouts/*": ["./src/layouts/*"],
       "@pages/*": ["./src/pages/*"],
-      "@hooks/*": ["./src/shared/hooks/*"],
-      "@utils/*": ["./src/shared/utils/*"],
-      "@types/*": ["./src/shared/types/*"],
-      "@assets/*": ["./src/assets/*"], 
-      "@/*": ["./src/*"]
+      "_types/*": ["./src/core/types/*"],
+      "@utils/*": ["./src/core/utils/*"]
     }
   },
   "include": ["src"],

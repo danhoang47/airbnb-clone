@@ -1,0 +1,21 @@
+
+#default-layout {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .header-section {
+        position: fixed;
+        top: 0;
+    }
+
+    .main-section {
+        height: 110vh;
+        background-color: lightcoral;
+    }
+
+    .footer-section {
+        position: fixed;
+        bottom: 0;
+    }
+}
