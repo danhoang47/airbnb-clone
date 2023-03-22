@@ -1,0 +1,59 @@
+@use "styles/variables";
+
+@mixin break-point() {
+	@media screen and (max-width: 550px) {
+		padding: 0 24px;
+	}
+
+	@media screen and (min-width: 551px) and (max-width: 744px) {
+		padding: 0 24px;
+	}
+
+	@media screen and (min-width: 745px) and (max-width: 950px) {
+		padding: 0 40px;
+	}
+
+	@media screen and (min-width: 951px) and (max-width: 1128px) {
+		padding: 0 40px;
+	}
+
+	@media screen and (min-width: 1129px) and (max-width: 1440px) {
+		padding: 0 40px;
+	}
+
+	@media screen and (min-width: 1441px) and (max-width: 1640px) {
+		padding: 0 80px;
+	}
+
+	@media screen and (min-width: 1641px) and (max-width: 1960px) {
+		padding: 0 80px;
+	}
+}
+
+@mixin container {
+	@include break-point(container);
+}
+
+@mixin border-bottom {
+}
+
+@mixin box-shadow {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)
+}
+
+@mixin border($side: null) {
+
+	@if ($side == null) {
+		border: 1px solid variables.$gray;
+	}
+	
+	@else {
+		border-#{$side}: 1px solid variables.$gray;
+	}
+}
+
+@mixin flex-v-h-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;	
+}

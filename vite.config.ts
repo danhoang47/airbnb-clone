@@ -11,10 +11,11 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
       layouts:  path.resolve(__dirname, "./src/layouts"),
       pages:  path.resolve(__dirname, "./src/pages"),
-      component: path.resolve(__dirname, "./src/core/components"),
+      component: path.resolve(__dirname, "./src/core/component"),
       features: path.resolve(__dirname, "./src/features"),
       types: path.resolve(__dirname, "./src/core/types"),
-      utils: path.resolve(__dirname, "./src/core/utils")
+      utils: path.resolve(__dirname, "./src/core/utils"),
+      styles: path.resolve(__dirname, "./src/styles")
     }
   }
 })

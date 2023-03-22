@@ -21,7 +21,9 @@
       "@layouts/*": ["./src/layouts/*"],
       "@pages/*": ["./src/pages/*"],
       "_types/*": ["./src/core/types/*"],
-      "@utils/*": ["./src/core/utils/*"]
+      "@utils/*": ["./src/core/utils/*"],
+      "@component/*": ["./src/core/component/*"],
+      "styles/*": ["./src/styles/*"]
     }
   },
   "include": ["src"],

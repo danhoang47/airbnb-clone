@@ -1,0 +1,5 @@
+@use 'styles/variables';
+
+.brand-logo {
+    color: variables.$brand-color;
+}

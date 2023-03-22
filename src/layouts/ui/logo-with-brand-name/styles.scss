@@ -1,0 +1,21 @@
+@use 'styles/variables';
+
+.logo-with-brand-name {
+    color: variables.$brand-color;
+
+    a[href="/"] {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.4rem;
+
+        svg[data-icon="airbnb"] {
+            font-size: 2.6rem;
+        }
+
+        .brand-name {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+    }
+}

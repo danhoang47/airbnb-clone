@@ -1,0 +1,26 @@
+@use 'styles/mixins';
+@use 'styles/variables';
+
+.profile-menu-item {
+
+    .menu-button {
+        button {
+            @include mixins.flex-v-h-center();
+            @include mixins.border();
+            cursor: pointer;
+            border-radius: 9999px;
+            gap: 1rem;
+            padding: 0.4rem 0.4rem 0.4rem 0.8rem;
+            transition: all 0.2s linear;
+            color: variables.$dark-gray;
+
+            &:hover {
+                @include mixins.box-shadow();
+            }
+
+            .fa-circle-user {
+                font-size: 2rem;
+            }
+        }
+    }
+}

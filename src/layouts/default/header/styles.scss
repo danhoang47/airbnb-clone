@@ -1,0 +1,21 @@
+@use 'styles/mixins';
+
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    @include mixins.border(bottom);
+
+    div[class$="content"] {
+        flex: 1 0 0;
+    }
+
+    .right-content {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        font-weight: 500;
+        gap: 1.2rem;
+    }
+}
