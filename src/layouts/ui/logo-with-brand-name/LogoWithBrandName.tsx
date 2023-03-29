@@ -1,5 +1,7 @@
-import Logo from "@component/logo";
+import { memo } from 'react';
 import { Link } from "react-router-dom";
+
+import Logo from "@component/logo";
 
 import "./styles.scss";
 
@@ -14,4 +16,4 @@ function LogoWithBrandName() {
 	);
 }
 
-export default LogoWithBrandName;
+export default memo(LogoWithBrandName);

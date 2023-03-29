@@ -23,7 +23,9 @@
       "_types/*": ["./src/core/types/*"],
       "@utils/*": ["./src/core/utils/*"],
       "@component/*": ["./src/core/component/*"],
-      "styles/*": ["./src/styles/*"]
+      "styles/*": ["./src/styles/*"],
+      "@hooks/*": ["./src/core/hooks/*"],
+      "@features/*": ["./src/features/*"]
     }
   },
   "include": ["src"],

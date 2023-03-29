@@ -1,8 +1,11 @@
 import { useState, useMemo, ReactNode, FC } from "react";
 
 import type { ContainerProps } from "_types/props";
-import clsx from "@utils/clsx";
 import MenuContext from "./MenuContext";
+import clsx from "@utils/clsx";
+import useClickOutside from "@hooks/use-click-outside";
+
+import "./styles.scss";
 
 export type MenuProps = ContainerProps & {
 	render?: (state: boolean) => ReactNode;
@@ -10,30 +13,27 @@ export type MenuProps = ContainerProps & {
 
 const Menu: FC<MenuProps> = ({ children, classNames = "", render }) => {
 	const [isOpen, setOpen] = useState<boolean>(false);
+	const ref = useClickOutside<HTMLDivElement>(() => {
+		setOpen(false);
+	});
 
-	const onMenuButtonClick = () => {
-		setOpen((prev) => !prev);
+	const onMenuClick = (state: boolean) => {
+		setOpen(state);
 	};
 
 	const menuContextValue = useMemo(
 		() => ({
 			isOpen,
-			onMenuButtonClick,
+			onMenuClick,
 		}),
 		[isOpen]
 	);
 
-	const className = useMemo(() => {
-		if (typeof classNames === "string") {
-			return clsx([classNames, "menu"]);
-		} else {
-			return clsx([...classNames, "menu"]);
-		}
-	}, [classNames]);
-
 	return (
 		<MenuContext.Provider value={menuContextValue}>
-			<div className={className}>{children}</div>
+			<div ref={ref} className={clsx(classNames, "menu")}>
+				{children}
+			</div>
 		</MenuContext.Provider>
 	);
 };

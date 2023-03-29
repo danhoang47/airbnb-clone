@@ -21,9 +21,9 @@ function Header({
 }: HeaderProps) {
 	return (
 		<Container id="header" classNames={clsx(classNames)} type="header">
-			<div className="left-content">{rightContent}</div>
+			<div className="left-content">{leftContent}</div>
 			<div className="middle-content">{middleContent}</div>
-			<div className="right-content">{leftContent}</div>
+			<div className="right-content">{rightContent}</div>
 		</Container>
 	);
 }

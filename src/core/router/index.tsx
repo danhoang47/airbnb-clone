@@ -9,11 +9,10 @@ import Home from "@pages/home";
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route>
-			<Route path="/" element={<DefaultLayout />}>
-				<Route path="/" element={<Home />}/>
-			</Route>
+			<Route path="/" element={<Home />} />
 		</Route>
 	)
-)
+);
 
 export default router;
+ 

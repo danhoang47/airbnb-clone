@@ -4,6 +4,7 @@
 .profile-menu-item {
 
     .menu-button {
+
         button {
             @include mixins.flex-v-h-center();
             @include mixins.border();
@@ -13,6 +14,10 @@
             padding: 0.4rem 0.4rem 0.4rem 0.8rem;
             transition: all 0.2s linear;
             color: variables.$dark-gray;
+
+            &.box-shadow {
+                @include mixins.box-shadow();
+            }
 
             &:hover {
                 @include mixins.box-shadow();

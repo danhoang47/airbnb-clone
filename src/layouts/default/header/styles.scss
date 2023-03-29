@@ -1,14 +1,20 @@
 @use 'styles/mixins';
+@use 'styles/variables';
 
 #header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 80px;
-    @include mixins.border(bottom);
+    position: relative;
 
     div[class$="content"] {
-        flex: 1 0 0;
+        flex: 1 0 140px;
+    }
+
+    .middle-content {
+        flex: 0 1 auto;
+        min-width: 348px;
     }
 
     .right-content {

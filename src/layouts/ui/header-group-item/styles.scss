@@ -1,0 +1,12 @@
+@use 'styles/variables';
+
+.language-setting-button {
+    width: 41.19px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    transition: background-color 0.2s linear;
+
+    &:hover {
+        background-color: variables.$light-gray;
+    }
+}

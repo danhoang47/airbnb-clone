@@ -1,0 +1,44 @@
+@use "styles/mixins";
+@use "styles/variables";
+
+.search-label {
+    width: min-content;
+    border-radius: 9999px;
+    display: flex;
+    @include mixins.border();
+    transition: all 0.2s linear;
+    color: variables.$dark-gray;
+    padding: 0.4rem;
+    align-items: center;
+    @include mixins.box-shadow();
+
+    &:hover {
+        @include mixins.box-shadow(true);
+    }
+
+    .search-label-item {
+        padding: 0.4rem 1.2rem;
+        @include mixins.flex-v-h-center();
+        flex: 1 0 0;
+        @include mixins.text-overflow();
+
+        &:first-child {
+            font-weight: 600;
+            color: variables.$dark;
+        }
+    }
+
+    .rounded {
+        @include mixins.flex-v-h-center();
+        width: 32px;
+        align-self: center;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background-color: variables.$brand-color;
+        color: variables.$light;
+    }
+
+    .divider {
+        height: 24px;
+    }
+}

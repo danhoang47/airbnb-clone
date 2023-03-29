@@ -15,7 +15,8 @@ export default defineConfig({
       features: path.resolve(__dirname, "./src/features"),
       types: path.resolve(__dirname, "./src/core/types"),
       utils: path.resolve(__dirname, "./src/core/utils"),
-      styles: path.resolve(__dirname, "./src/styles")
+      styles: path.resolve(__dirname, "./src/styles"),
+      hooks: path.resolve(__dirname, "./src/core/hooks")
     }
   }
 })

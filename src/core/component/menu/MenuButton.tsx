@@ -9,16 +9,19 @@ export type MenuButtonProps = ContainerProps & {
 	toggle?: string;
 };
 
-function MenuButton({ children, classNames, toggle = '' }: MenuButtonProps) {
-	const { isOpen, onMenuButtonClick } = useContext(MenuContext);
+function MenuButton({ children, classNames, toggle = "" }: MenuButtonProps) {
+	const { isOpen, onMenuClick } = useContext(MenuContext);
 
 	return (
-		<div className={clsx({ toggle: isOpen }, "menu-button")}>
+		<div className={"menu-button"}>
 			<Button
-				onClick={onMenuButtonClick}
+				onClick={() => {
+					onMenuClick(!isOpen);
+				}}
+				classNames={clsx({ [toggle]: isOpen })}
 			>
-	            {children}
-	        </Button>
+				{children}
+			</Button>
 		</div>
 	);
 }

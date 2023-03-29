@@ -4,6 +4,7 @@ import { faBars, faCircleUser } from '@fortawesome/free-solid-svg-icons';
 
 import { Menu, MenuButton, MenuItem, MenuList } from "@component/menu";
 import Icon from '@component/icon';
+import clsx from "@utils/clsx";
 
 import "./styles.scss";
 
@@ -42,7 +43,7 @@ function ProfileMenuItem() {
 	return (
 		<div className="profile-menu-item">
 			<Menu>
-				<MenuButton>
+				<MenuButton toggle="box-shadow">
                     <Icon icon={faBars}/>
                     <Icon icon={faCircleUser} />
                 </MenuButton>

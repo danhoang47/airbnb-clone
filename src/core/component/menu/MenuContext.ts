@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 export type MenuContextValueType = {
 	isOpen: boolean;
-	onMenuButtonClick: () => void;
+	onMenuClick: (state: boolean) => void;
 };
 
 const MenuContext = createContext<MenuContextValueType>(

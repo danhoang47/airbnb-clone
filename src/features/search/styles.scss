@@ -1,0 +1,35 @@
+@use "styles/mixins";
+@use "styles/variables";
+
+.search-section {
+	display: flex;
+	justify-content: center;
+	height: 100%;
+	background-color: variables.$light;
+	z-index: 1;
+
+
+	.search-expand {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+.scale-enter > div {
+	transform: scale(0) translateY(-100%);
+}
+
+.scale-enter-active > div {
+	transform: scale(1) translateY(0);
+	transition: opacity 500ms, transform 500ms;
+}
+
+.scale-exit > div {
+	transform: scale(1) translateY(0);
+}
+
+.scale-exit-active > div {
+	transform: scale(0) translateY(-100%);
+	transition: opacity 500ms, transform 500ms;
+}

@@ -11,10 +11,8 @@ export default function clsx(
 	} else if (typeof className === "string") {
 		return arrayStringToString([className, based]);
 	} else {
-		const acc = Object.keys([based])
+		const acc = Object.keys(className)
 			.filter((key) => className[key])
-			.map((key) => className[key])
-			.join(" ");
 		return arrayStringToString([...acc, based]);
 	}
 }

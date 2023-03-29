@@ -1,20 +1,20 @@
-
+@use 'styles/mixins';
 
 #default-layout {
-    position: relative;
+	position: relative;
 
-    .header-section {
-        position: sticky;
-        position: -webkit-sticky; 
-        top: 0;
-    }
+	.header-section {
+		position: sticky;
+		position: -webkit-sticky;
+		top: 0;
+	}
 
-    .main-section {
-        
-    }
+	.main-section {
+        //TODO: adding styles
+	}
 
-    .footer-section {
-        position: sticky;
-        bottom: 0;
-    }
+	.footer-section {
+		position: sticky;
+		bottom: 0;
+	}
 }
