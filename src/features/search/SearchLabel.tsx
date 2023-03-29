@@ -37,18 +37,16 @@ function SearchLabel({
 		[]
 	);
 
-	const onLabelClick = (e: MouseEvent, dataIndex: number) => {};
-
 	return (
 		<div className="search-label">
-			{labels.map(({ dataIndex, id, label }, index) => {
+			{labels.map(({ dataIndex, label }, index) => {
 				return (
 					<>
 						<Button
 							key={label}
 							classNames={"search-label-item"}
-							onClick={(e) => {
-								onLabelClick(e, dataIndex);
+							onClick={() => {
+								onSearchTabClick(dataIndex)
 							}}
 						>
 							{label}

@@ -1,53 +1,55 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import Button from "@component/button";
 import Icon from "@component/icon";
 import clsx from "@utils/clsx";
-import useClickOutside from "@hooks/use-click-outside";
+import tabLabels from "./tab-labels";
+import type { TabLabel } from "./tab-labels";
 
 import "./SearchExpand.style.scss";
 
-const tabLabels = [
-	{
-		id: 1,
-		label: "Địa điểm",
-		subLabel: "Tìm kiếm địa điểm",
-		classNames: "location-search-tablabel",
-		tabLabelIndex: 0,
-	},
-	[
-		{
-			id: 2,
-			label: "Nhận phòng",
-			subLabel: "Thêm ngày",
-			classNames: "location-search-tablabel",
-			tabLabelIndex: 1,
-		},
-		{
-			id: 3,
-			label: "Trả phòng",
-			subLabel: "Thêm ngày",
-			classNames: "location-search-tablabel",
-			tabLabelIndex: 2,
-		},
-	],
-	{
-		id: 4,
-		label: "Khách",
-		subLabel: "Thêm khách",
-		classNames: "location-search-tablabel",
-		tabLabelIndex: 3,
-	},
-];
+export type TabPanelProps = TabLabel & {
+	tabPanelIndex: number;
+	onTabLabelClick: (tabLabelIndex: number) => void;
+};
 
-function SearchExpand() {
-	const [tabPanelIndex, setTabPanelIndex] = useState<number>(0);
+function TabPanel({
+	id,
+	label,
+	subLabel,
+	classNames,
+	tabLabelIndex,
+	tabPanelIndex,
+	onTabLabelClick,
+}: TabPanelProps) {
+	return (
+		<div
+			className={clsx(
+				{
+					[classNames]: true,
+					selected: tabPanelIndex === tabLabelIndex,
+				},
+				"search-tablabel"
+			)}
+			onClick={() => {
+				onTabLabelClick(tabLabelIndex);
+			}}
+		>
+			<label className="tablabel">{label}</label>
+			<p className="sub-label">{subLabel}</p>
+		</div>
+	);
+}
+
+function SearchExpand({
+	tabPanelIndex,
+	onTabLabelClick,
+}: {
+	tabPanelIndex: number;
+	onTabLabelClick: (tabIndex: number) => void;
+}) {
 	const tabPanelContainerRef = useRef<HTMLDivElement>(null);
-
-	const onTabLabelClick = (clickedTabPanelIndex: number) => {
-		setTabPanelIndex(clickedTabPanelIndex);
-	};
 
 	useEffect(() => {
 		if (tabPanelContainerRef.current) {
@@ -67,7 +69,7 @@ function SearchExpand() {
 					ref={tabPanelContainerRef}
 					tabIndex={0}
 					onBlur={() => {
-						setTabPanelIndex(-1);
+						onTabLabelClick(-1);
 					}}
 					className={clsx(
 						{
@@ -86,58 +88,23 @@ function SearchExpand() {
 									key={index}
 								>
 									{tabLabel.map((subtabLabel) => (
-										<div
-											className={clsx(
-												{
-													[subtabLabel.classNames]:
-														true,
-													selected:
-														tabPanelIndex ===
-														subtabLabel.tabLabelIndex,
-												},
-												"sub-search-tablabel"
-											)}
+										<TabPanel
+											{...subtabLabel}
 											key={subtabLabel.id}
-											onClick={() => {
-												onTabLabelClick(
-													subtabLabel.tabLabelIndex
-												);
-											}}
-										>
-											<label className="sub-tablabel">
-												{subtabLabel.label}
-											</label>
-											<p className="sub-label">
-												{subtabLabel.subLabel}
-											</p>
-										</div>
+											tabPanelIndex={tabPanelIndex}
+											onTabLabelClick={onTabLabelClick}
+										/>
 									))}
 								</div>
 							);
 						} else {
 							return (
-								<div
-									className={clsx(
-										{
-											[tabLabel.classNames]: true,
-											selected:
-												tabPanelIndex ===
-												tabLabel.tabLabelIndex,
-										},
-										"search-tablabel"
-									)}
+								<TabPanel
+									{...tabLabel}
 									key={tabLabel.id}
-									onClick={() => {
-										onTabLabelClick(tabLabel.tabLabelIndex);
-									}}
-								>
-									<label className="tablabel">
-										{tabLabel.label}
-									</label>
-									<p className="sub-label">
-										{tabLabel.subLabel}
-									</p>
-								</div>
+									tabPanelIndex={tabPanelIndex}
+									onTabLabelClick={onTabLabelClick}
+								/>
 							);
 						}
 					})}

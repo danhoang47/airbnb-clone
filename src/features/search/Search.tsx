@@ -1,31 +1,42 @@
-import { forwardRef, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
 import { SearchLabel, SearchExpand } from "@features/search";
 
 import "./styles.scss";
 
-const Search = forwardRef<HTMLFormElement, any>((props, ref) => {
-	const [isSearchOpen, setSearchOpen] = useState<boolean>(false);
-	const [tabIndex, setTabIndex] = useState<number>(0);
+export type SearchProps = {
+	isSearchOpen: boolean;
+	onSearchNavigate: (state: boolean) => void;
+};
+
+const Search = ({ isSearchOpen, onSearchNavigate }: SearchProps) => {
+	const [tabPanelIndex, setTabPanelIndex] = useState<number>(0);
 	const nodeRef = useRef<HTMLDivElement>(null);
 
 	const onSearchLabelButtonClick = () => {
-		setSearchOpen(true);
+		onSearchNavigate(true);
 	};
 
-	const onSearchTabClick = (tabIndex: number) => {};
+	const onSearchTabClick = (tabIndex: number) => {
+		if (!isSearchOpen) {
+			onSearchNavigate(true);
+		}
 
+		setTabPanelIndex(tabIndex);
+	};
+
+	console.log(tabPanelIndex);
 	return (
 		<CSSTransition
 			nodeRef={nodeRef}
-			timeout={{ enter: 300, exit: 300 }}
+			timeout={{ enter: 350, exit: 350 }}
 			classNames="scale"
 			in={isSearchOpen}
 		>
 			<div ref={nodeRef} className="search-section">
 				{isSearchOpen ? (
-					<SearchExpand />
+					<SearchExpand tabPanelIndex={tabPanelIndex} onTabLabelClick={onSearchTabClick}/>
 				) : (
 					<SearchLabel
 						onSeachLabelButtonClick={onSearchLabelButtonClick}
@@ -35,6 +46,6 @@ const Search = forwardRef<HTMLFormElement, any>((props, ref) => {
 			</div>
 		</CSSTransition>
 	);
-});
+};
 
 export default Search;

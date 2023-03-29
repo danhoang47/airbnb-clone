@@ -6,10 +6,9 @@ function useClickOutside<ElementType extends HTMLElement>(
 	const elementRef = useRef<ElementType>(null);
 
 	const onClickHandler = (event: MouseEvent | TouchEvent) => {
-		
 		if (
 			!elementRef.current ||
-			elementRef.current.contains(event.target as Node)
+			event.composedPath().includes(elementRef.current)
 		) {
 			return;
 		}

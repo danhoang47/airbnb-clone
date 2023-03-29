@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, forwardRef } from "react";
 
 import clsx from "@utils/clsx";
 import { ContainerProps } from "_types/props";
@@ -10,29 +10,17 @@ export type ContainerExtraProps = {
 	id?: string;
 };
 
-function Container({
-	children,
-	type = "div",
-	classNames = "",
-	id,
-}: ContainerProps & ContainerExtraProps) {
+const Container = forwardRef<
+	HTMLDivElement,
+	ContainerProps & ContainerExtraProps
+>(({ children, type = "div", classNames = "", id }, ref) => {
 	const Component = type;
-	const className = useMemo(() => {
-		if (typeof classNames === 'string') {
-			return clsx([classNames, "container"]);
-		} else {
-			return clsx([...classNames, "container"]);
-		}
-	}, [classNames])
 
 	return (
-		<Component
-			id={id}
-			className={className}
-		>
+		<Component id={id} className={clsx(classNames, "container")} ref={ref}>
 			{children}
 		</Component>
 	);
-}
+});
 
 export default Container;

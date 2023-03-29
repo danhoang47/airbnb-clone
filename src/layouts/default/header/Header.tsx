@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { forwardRef, ReactNode } from "react";
 
 import Container from "@component/container";
 import type { ContainerProps } from "_types/props";
@@ -12,20 +12,24 @@ export type HeaderProps = ContainerProps & {
 	leftContent?: ReactNode;
 };
 
-function Header({
-	rightContent,
-	middleContent,
-	leftContent,
-	children,
-	classNames = "",
-}: HeaderProps) {
-	return (
-		<Container id="header" classNames={clsx(classNames)} type="header">
-			<div className="left-content">{leftContent}</div>
-			<div className="middle-content">{middleContent}</div>
-			<div className="right-content">{rightContent}</div>
-		</Container>
-	);
-}
+const Header = forwardRef<HTMLDivElement, HeaderProps>(
+	(
+		{ rightContent, middleContent, leftContent, children, classNames = "" },
+		ref
+	) => {
+		return (
+			<Container
+				id="header"
+				classNames={clsx(classNames)}
+				type="header"
+				ref={ref}
+			>
+				<div className="left-content">{leftContent}</div>
+				<div className="middle-content">{middleContent}</div>
+				<div className="right-content">{rightContent}</div>
+			</Container>
+		);
+	}
+);
 
 export default Header;
