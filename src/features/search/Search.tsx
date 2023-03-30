@@ -14,10 +14,6 @@ const Search = ({ isSearchOpen, onSearchNavigate }: SearchProps) => {
 	const [tabPanelIndex, setTabPanelIndex] = useState<number>(0);
 	const nodeRef = useRef<HTMLDivElement>(null);
 
-	const onSearchLabelButtonClick = () => {
-		onSearchNavigate(true);
-	};
-
 	const onSearchTabClick = (tabIndex: number) => {
 		if (!isSearchOpen) {
 			onSearchNavigate(true);
@@ -30,19 +26,16 @@ const Search = ({ isSearchOpen, onSearchNavigate }: SearchProps) => {
 	return (
 		<CSSTransition
 			nodeRef={nodeRef}
-			timeout={{ enter: 350, exit: 350 }}
+			timeout={150}
 			classNames="scale"
 			in={isSearchOpen}
 		>
 			<div ref={nodeRef} className="search-section">
-				{isSearchOpen ? (
-					<SearchExpand tabPanelIndex={tabPanelIndex} onTabLabelClick={onSearchTabClick}/>
-				) : (
-					<SearchLabel
-						onSeachLabelButtonClick={onSearchLabelButtonClick}
-						onSearchTabClick={onSearchTabClick}
-					/>
-				)}
+				<SearchLabel onSearchTabClick={onSearchTabClick} />
+				<SearchExpand
+					tabPanelIndex={tabPanelIndex}
+					onTabLabelClick={onSearchTabClick}
+				/>
 			</div>
 		</CSSTransition>
 	);

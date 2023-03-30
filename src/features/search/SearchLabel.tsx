@@ -9,12 +9,10 @@ import "./SearchLabel.styles.scss"
 
 export type SeachLabelProps = {
 	onSearchTabClick: (tabIndex: number) => void;
-	onSeachLabelButtonClick: () => void;
 };
 
 function SearchLabel({
 	onSearchTabClick,
-	onSeachLabelButtonClick,
 }: SeachLabelProps) {
 	const labels = useMemo(
 		() => [
@@ -57,7 +55,9 @@ function SearchLabel({
 							<Button
 								key={index}
 								classNames={"rounded"}
-								onClick={onSeachLabelButtonClick}
+								onClick={() => {
+									onSearchTabClick(0)
+								}}
 							>
 								<span>
 									<Icon icon={faMagnifyingGlass} />

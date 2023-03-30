@@ -11,6 +11,7 @@
     padding: 0.4rem;
     align-items: center;
     @include mixins.box-shadow();
+    z-index: 0;
 
     &:hover {
         @include mixins.box-shadow(true);

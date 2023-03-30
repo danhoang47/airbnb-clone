@@ -1,18 +1,19 @@
 @use "styles/mixins";
 @use "styles/variables";
+@use "styles/animations";
 
 .search-expand {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	display: none;
 
 	.search-tablist {
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-		opacity: 1;
-		transition: opacity 0.1s linear;
-		transition-delay: 0.3s;
+		opacity: 0;
+		animation: fade-in 0.15s linear forwards 0.21s;
 	}
 
 	.search-tabpanel {
@@ -25,9 +26,8 @@
 		@include mixins.border(bottom);
 		font-size: 0.9rem;
 		padding-bottom: 0.6rem;
-		opacity: 1;
-		transition: opacity 0.1s linear;
-		transition-delay: 0.3s;
+		background-color: variables.$light;
+		z-index: -1;
 
 		.search-tabpanel-container {
 			background-color: variables.$gray-2;
@@ -36,6 +36,8 @@
 			@include mixins.border();
 			position: relative;
 			width: 850px;
+			opacity: 0;
+			animation: fade-in 0.15s linear forwards 0.21s;
 
 			&:not(.focused) {
 

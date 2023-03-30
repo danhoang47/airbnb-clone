@@ -46,7 +46,6 @@ function DefaultLayout({ children, subContent }: DefaultLayoutProps) {
 		setSearchOpen(state);
 	}
 
-	console.log(isSearchOpen);
 	return (
 		<SearchContext.Provider value={searchContextValue}>
 			<div id="default-layout">
