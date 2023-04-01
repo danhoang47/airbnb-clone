@@ -1,26 +1,47 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useCallback } from "react";
 
-import { DateRangeType, GuestType, PlaceType } from "_types/props";
+import { DateRangeType, GuestType, LocationType } from "_types/props";
 import SearchContext from "./contexts";
 
 export function useSearchContext() {
 	return useContext(SearchContext);
 }
 
-export function useSearchPlace(initialValue: PlaceType) {
-	const [place, setPlace] = useState<PlaceType>(initialValue);
+export function useSearchLocation(initialValue: LocationType) {
+	const [location, setLocation] = useState<LocationType>(initialValue);
 
-	return { place, setPlace };
+	const onLocationChange = (newLocation: string) => {
+		setLocation(newLocation);
+	};
+
+	return { location, onLocationChange };
 }
 
 export function useDateRange(initialValue: DateRangeType) {
 	const [dateRange, setDateRange] = useState<DateRangeType>(initialValue);
 
-	return { dateRange, setDateRange };
+	const onDateRangeChange = useCallback(
+		(newDateRange: DateRangeType) => {
+			setDateRange(newDateRange);
+		},
+		[dateRange]
+	);
+
+	return { dateRange, onDateRangeChange };
 }
 
 export function useGuest(initialValue: GuestType) {
 	const [guests, setGuests] = useState<GuestType>(initialValue);
 
-	return { guests, setGuests };
+	const onGuestsChange = useCallback(
+		(key: keyof GuestType, value: number) => {
+			setGuests((p) => ({
+				...p,
+				[key]: value,
+			}));
+		},
+		[guests]
+	);
+
+	return { guests, onGuestsChange };
 }

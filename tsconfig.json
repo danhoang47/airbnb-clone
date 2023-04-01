@@ -25,7 +25,8 @@
       "@component/*": ["./src/core/component/*"],
       "styles/*": ["./src/styles/*"],
       "@hooks/*": ["./src/core/hooks/*"],
-      "@features/*": ["./src/features/*"]
+      "@features/*": ["./src/features/*"],
+      "@data/*": ["./src/core/data/*"]
     }
   },
   "include": ["src"],

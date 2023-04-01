@@ -1,0 +1,39 @@
+@use "styles/mixins";
+@use "styles/variables";
+
+.location-search {
+    left: 0;
+    top: 100%;
+    background-color: variables.$light;
+    min-width: 300px;
+
+    .location-search-results {
+        padding: 1rem 0;
+
+        .location-search-results-item {
+            @include mixins.flex-v-h-center();
+            justify-content: flex-start;
+            font-size: 1.1rem;
+            gap: 0.6rem;
+            margin-bottom: 0.2rem;
+            padding: 0.4rem 1.6rem;
+
+            &:hover {
+                background-color: variables.$gray-0;
+            }
+
+            .location-search-icon-wrapper {
+                width: 3.2rem;
+                aspect-ratio: 1 / 1;
+                background-color: variables.$gray;
+                @include mixins.flex-v-h-center();
+                font-size: 1.8rem;
+                border-radius: 0.6rem;
+            }
+
+            .result-location-name {
+                font-weight: 350;
+            }
+        }
+    }
+}

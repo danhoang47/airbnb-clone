@@ -1,9 +1,11 @@
-import SearchLabel from "./SearchLabel";
-import SearchExpand from "./SearchExpand";
+import SearchLabel from "./search-label";
+import SearchExpand from "./search-expand";
+import LocationSearch from "./location-search";
 
 export {
     SearchLabel,
-    SearchExpand
+    SearchExpand,
+    LocationSearch
 }
 
 export { default } from './Search'

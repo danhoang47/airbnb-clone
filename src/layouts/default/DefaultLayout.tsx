@@ -1,13 +1,13 @@
 import { ReactNode, useEffect, useMemo, useState } from "react";
 
-import SearchContext, { SeachContextType } from "./contexts";
-import { useDateRange, useGuest, useSearchPlace } from "./hooks";
+import SearchContext from "./contexts";
+import { useDateRange, useGuest, useSearchLocation } from "./hooks";
 import Header from "@layouts/default/header";
 import HeaderGroupItem from "@layouts/ui/header-group-item";
 import Footer from "@layouts/default/footer";
 import LogoWithBrandName from "@layouts/ui/logo-with-brand-name";
 import Search from "@features/search";
-import { ContainerProps } from "_types/props";
+import { ContainerProps, SeachContextType } from "_types/props";
 
 import "./styles.scss";
 import useClickOutside from "@hooks/use-click-outside";
@@ -21,9 +21,9 @@ function DefaultLayout({ children, subContent }: DefaultLayoutProps) {
 	const headerRef = useClickOutside<HTMLDivElement>(() => {
 		setSearchOpen(false);
 	});
-	const { place, setPlace } = useSearchPlace("");
-	const { dateRange, setDateRange } = useDateRange({});
-	const { guests, setGuests } = useGuest({
+	const { location, onLocationChange } = useSearchLocation("");
+	const { dateRange, onDateRangeChange } = useDateRange({});
+	const { guests, onGuestsChange } = useGuest({
 		adult: 0,
 		child: 0,
 		infant: 0,
@@ -33,13 +33,13 @@ function DefaultLayout({ children, subContent }: DefaultLayoutProps) {
 	const searchContextValue: SeachContextType = useMemo(
 		() => ({
 			guests,
-			place,
+			location,
 			dateRange,
-			setPlace,
-			setDateRange,
-			setGuests,
+			onLocationChange,
+			onDateRangeChange,
+			onGuestsChange,
 		}),
-		[place, dateRange, guests]
+		[location, dateRange, guests]
 	);
 
 	const onSearchNavigate = (state: boolean) => {

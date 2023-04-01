@@ -17,17 +17,17 @@ function SearchLabel({
 	const labels = useMemo(
 		() => [
 			{
-				id: 0,
+				id: 12341,
 				label: "Địa điểm bất kỳ",
 				dataIndex: 0,
 			},
 			{
-				id: 1,
+				id: 1231,
 				label: "Tuần bất kỳ",
 				dataIndex: 1,
 			},
 			{
-				id: 2,
+				id: 4124,
 				label: "Thêm khách",
 				dataIndex: 3,
 			},
@@ -37,11 +37,11 @@ function SearchLabel({
 
 	return (
 		<div className="search-label">
-			{labels.map(({ dataIndex, label }, index) => {
+			{labels.map(({ id, dataIndex, label }, index) => {
 				return (
 					<>
 						<Button
-							key={label}
+							key={id}
 							classNames={"search-label-item"}
 							onClick={() => {
 								onSearchTabClick(dataIndex)

@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
-import { SearchLabel, SearchExpand } from "@features/search";
+import { SearchLabel, SearchExpand, LocationSearch } from "@features/search";
 
 import "./styles.scss";
 
@@ -22,7 +22,22 @@ const Search = ({ isSearchOpen, onSearchNavigate }: SearchProps) => {
 		setTabPanelIndex(tabIndex);
 	};
 
-	console.log(tabPanelIndex);
+	const renderSearchTabPanel = () => {
+		switch (tabPanelIndex) {
+			case 0:
+				return <LocationSearch />;
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			default:
+				return null;
+		}
+	};
+
 	return (
 		<CSSTransition
 			nodeRef={nodeRef}
@@ -35,6 +50,7 @@ const Search = ({ isSearchOpen, onSearchNavigate }: SearchProps) => {
 				<SearchExpand
 					tabPanelIndex={tabPanelIndex}
 					onTabLabelClick={onSearchTabClick}
+					renderSearchTabPanel={renderSearchTabPanel}
 				/>
 			</div>
 		</CSSTransition>

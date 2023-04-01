@@ -13,7 +13,7 @@ function useClickOutside<ElementType extends HTMLElement>(
 			return;
 		}
 
-		handler();
+		handler(event);
 	};
 
 	useEffect(() => {
