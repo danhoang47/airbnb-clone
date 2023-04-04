@@ -2,7 +2,6 @@
 @use "styles/variables";
 
 .search-label {
-    width: min-content;
     border-radius: 9999px;
     display: flex;
     @include mixins.border();

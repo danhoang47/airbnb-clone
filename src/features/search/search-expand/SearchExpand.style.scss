@@ -10,10 +10,12 @@
 
 	.search-tablist {
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-between;
 		align-items: center;
 		opacity: 0;
 		animation: fade-in 0.15s linear forwards 0.21s;
+		max-width: 380px;
+		margin: 0 auto;
 	}
 
 	.search-tabpanel {
@@ -78,6 +80,7 @@
 				cursor: pointer;
 				color: rgba(0, 0, 0, 0.8);
 				position: relative;
+				flex-basis: calc(100% / 3);
 
 				.search-input-clear-btn {
 					position: absolute;
@@ -95,10 +98,6 @@
 					&:hover {
 						opacity: 1;
 					}
-				}
-
-				&.guest-search-tablabel, &.location-search-tablabel {
-					flex: 1 0 0;
 				}
 
 				&.search-tablabel-container {

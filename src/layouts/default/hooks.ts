@@ -21,8 +21,11 @@ export function useDateRange(initialValue: DateRangeType) {
 	const [dateRange, setDateRange] = useState<DateRangeType>(initialValue);
 
 	const onDateRangeChange = useCallback(
-		(newDateRange: DateRangeType) => {
-			setDateRange(newDateRange);
+		(key: keyof DateRangeType, value: Date) => {
+			setDateRange(p => ({
+				...p,
+				[key]: value
+			}));
 		},
 		[dateRange]
 	);

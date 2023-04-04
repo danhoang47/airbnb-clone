@@ -1,32 +1,24 @@
-import { memo, useRef, ReactNode, useId, useCallback } from "react";
+import { memo, ReactNode, useId, useCallback } from "react";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import Divider from "@component/divider";
 import Button from "@component/button";
 import Icon from "@component/icon";
 import clsx from "@utils/clsx";
-import tabLabels from "../search-label/tab-labels";
+import tabLabels from "./tab-labels";
 import { useSearchContext } from "@layouts/default/hooks";
-import type { TabLabel } from "../search-label/tab-labels";
+import type { TabLabel } from "./tab-labels";
 
 import "./SearchExpand.style.scss";
+import useClickOutside from "@hooks/use-click-outside";
 
-export type TabPanelBaseProps = TabLabel & {
+export type TabPanelProps = TabLabel & {
 	tabPanelIndex: number;
-	onTabLabelClick: (tabLabelIndex: number) => void;
-};
-
-export type TabPanelWithInputProps = TabPanelBaseProps & {
-	hasInputable: true;
 	value: string | number;
-	onValueChange: (arg1?: any, arg2?: any) => void;
+	hasInputable: boolean;
+	onTabLabelClick: (tabLabelIndex: number) => void;
+	onValueChange: (value: Date | string | number | undefined) => void;
 };
-
-export type TabPanelWithoutInputProps = TabPanelBaseProps & {
-	hasInputable: false;
-};
-
-export type TabPanelProps = TabPanelWithInputProps | TabPanelWithoutInputProps;
 
 const TabPanel = memo((props: TabPanelProps) => {
 	const inputId = useId();
@@ -38,6 +30,8 @@ const TabPanel = memo((props: TabPanelProps) => {
 		tabPanelIndex,
 		onTabLabelClick,
 		hasInputable,
+		value,
+		onValueChange,
 	} = props;
 
 	const renderSubLabel = () => {
@@ -52,17 +46,16 @@ const TabPanel = memo((props: TabPanelProps) => {
 						placeholder={subLabel}
 						value={value}
 						onChange={(e) => onValueChange(e.target.value)}
+						readOnly={!hasInputable}
 					/>
-					{	tabPanelIndex === tabLabelIndex &&
+					{tabPanelIndex === tabLabelIndex && value && (
 						<Button
 							classNames="search-input-clear-btn"
-							onClick={() => {
-								onValueChange(undefined);
-							}}
+							onClick={() => {}}
 						>
 							<Icon icon={faXmark} />
 						</Button>
-					}
+					)}
 				</>
 			);
 		} else {
@@ -83,10 +76,27 @@ const TabPanel = memo((props: TabPanelProps) => {
 				onTabLabelClick(tabLabelIndex);
 			}}
 		>
-			<label className="tablabel" htmlFor={inputId}>
-				{label}
-			</label>
-			{renderSubLabel()}
+			<div>
+				<label className="tablabel" htmlFor={inputId}>
+					{label}
+				</label>
+				<input
+					id={inputId}
+					className="sub-label"
+					placeholder={subLabel}
+					value={value}
+					onChange={(e) => onValueChange(e.target.value)}
+					readOnly={hasInputable ? false : true}
+				/>
+				{tabPanelIndex === tabLabelIndex && value && (
+					<Button
+						classNames="search-input-clear-btn"
+						onClick={() => {}}
+					>
+						<Icon icon={faXmark} />
+					</Button>
+				)}
+			</div>
 		</div>
 	);
 });
@@ -100,33 +110,52 @@ function SearchExpand({
 	onTabLabelClick: (tabIndex: number) => void;
 	renderSearchTabPanel: () => ReactNode;
 }) {
-	const tabPanelContainerRef = useRef<HTMLDivElement>(null);
+	const tabPanelContainerRef = useClickOutside<HTMLDivElement>(
+		(event: Event) => {
+			const isSearchLabelClicked = event
+				.composedPath()
+				.some((eventTarget) => {
+					const eventTargetElement = eventTarget as HTMLElement;
+					const elementClassList = eventTargetElement.classList;
+					return (
+						elementClassList &&
+						elementClassList.contains("search-label")
+					);
+				});
+
+			if (isSearchLabelClicked) {
+				return;
+			}
+
+			onTabLabelClick(-1);
+		}
+	);
 	const searchContext = useSearchContext();
 
 	const renderTabLabel = (tabLabel: TabLabel) => {
-		if (tabLabel.hasInputable) {
-			return (
-				<TabPanel
-					{...tabLabel}
-					key={tabLabel.id}
-					tabPanelIndex={tabPanelIndex}
-					onTabLabelClick={onTabLabelClick}
-					hasInputable={true}
-					value={searchContext[tabLabel.inputKey]}
-					onValueChange={searchContext[tabLabel.onValueChangeKey]}
-				/>
-			);
-		} else {
-			return (
-				<TabPanel
-					{...tabLabel}
-					key={tabLabel.id}
-					tabPanelIndex={tabPanelIndex}
-					onTabLabelClick={onTabLabelClick}
-					hasInputable={false}
-				/>
-			);
-		}
+		const { inputKey, extraKey, selector, onValueChangeKey } = tabLabel;
+		const value = selector
+			? selector(searchContext[inputKey])
+			: searchContext[inputKey];
+
+		const handleValueChange = (value?: any) => {
+			if (extraKey) {
+				searchContext[onValueChangeKey](extraKey, value);
+			} else {
+				searchContext(value);
+			}
+		};
+
+		return (
+			<TabPanel
+				{...tabLabel}
+				key={tabLabel.id}
+				tabPanelIndex={tabPanelIndex}
+				onTabLabelClick={onTabLabelClick}
+				value={value}
+				onValueChange={handleValueChange}
+			/>
+		);
 	};
 
 	return (
@@ -139,10 +168,6 @@ function SearchExpand({
 			<div className="search-tabpanel">
 				<div
 					ref={tabPanelContainerRef}
-					tabIndex={-1}
-					onBlur={() => {
-						onTabLabelClick(-1);
-					}}
 					className={clsx(
 						{
 							focused: tabPanelIndex !== -1,
