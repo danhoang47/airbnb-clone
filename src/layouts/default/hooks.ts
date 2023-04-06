@@ -1,6 +1,11 @@
 import { useContext, useState, useCallback } from "react";
 
-import { DateRangeType, GuestType, LocationType } from "_types/props";
+import {
+	DateRangeType,
+	GuestType,
+	LocationType,
+	GuestKeyType,
+} from "_types/props";
 import SearchContext from "./contexts";
 
 export function useSearchContext() {
@@ -10,21 +15,30 @@ export function useSearchContext() {
 export function useSearchLocation(initialValue: LocationType) {
 	const [location, setLocation] = useState<LocationType>(initialValue);
 
-	const onLocationChange = (newLocation: string) => {
-		setLocation(newLocation);
+	const onLocationChange = (newLocation: string | undefined) => {
+		setLocation(newLocation ? newLocation : "");
 	};
 
 	return { location, onLocationChange };
 }
 
-export function useDateRange(initialValue: DateRangeType) {
-	const [dateRange, setDateRange] = useState<DateRangeType>(initialValue);
+export function useDateRange(initialValue: Omit<DateRangeType, "_type">) {
+	const [dateRange, setDateRange] = useState<DateRangeType>({
+		_type: "dateRange",
+		...initialValue,
+	});
 
 	const onDateRangeChange = useCallback(
-		(key: keyof DateRangeType, value: Date) => {
-			setDateRange(p => ({
+		({
+			key,
+			value,
+		}: {
+			key: keyof Omit<DateRangeType, "_type">;
+			value: Date;
+		}) => {
+			setDateRange((p) => ({
 				...p,
-				[key]: value
+				[key]: value,
 			}));
 		},
 		[dateRange]
@@ -33,11 +47,14 @@ export function useDateRange(initialValue: DateRangeType) {
 	return { dateRange, onDateRangeChange };
 }
 
-export function useGuest(initialValue: GuestType) {
-	const [guests, setGuests] = useState<GuestType>(initialValue);
+export function useGuest(initialValue: Omit<GuestType, "_type">) {
+	const [guests, setGuests] = useState<GuestType>({
+		_type: "guest",
+		...initialValue,
+	});
 
 	const onGuestsChange = useCallback(
-		(key: keyof GuestType, value: number) => {
+		({ key, value }: { key: GuestKeyType; value: number }) => {
 			setGuests((p) => ({
 				...p,
 				[key]: value,

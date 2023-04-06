@@ -19,7 +19,7 @@ export type TabLabel = {
 		FunctionPropertyName<SearchContextType>
 	>;
 	onValueChangeKey: FunctionPropertyName<SearchContextType>;
-	selector?: (arg: DateRangeType | GuestType) => any;
+	selector?: (arg: string | DateRangeType | GuestType) => any;
 };
 
 const tabLabels: (TabLabel | TabLabel[])[] = [
@@ -44,11 +44,11 @@ const tabLabels: (TabLabel | TabLabel[])[] = [
 			hasInputable: false,
 			extraKey: "from",
 			selector: (dateRange) => {
-				if (!isGuestType(dateRange)) {
+				if (isDateRangeType(dateRange)) {
 					return dateRange.from ? formatDate(dateRange.from) : "";
 				}
 
-				return null;
+				return undefined;
 			},
 			onValueChangeKey: "onDateRangeChange",
 		},
@@ -61,11 +61,11 @@ const tabLabels: (TabLabel | TabLabel[])[] = [
 			inputKey: "dateRange",
 			hasInputable: false,
 			selector: (dateRange) => {
-				if (!isGuestType(dateRange)) {
+				if (isDateRangeType(dateRange)) {
 					return dateRange.from ? formatDate(dateRange.from) : "";
 				}
 
-				return null;
+				return undefined;
 			},
 			onValueChangeKey: "onDateRangeChange",
 		},
@@ -81,10 +81,16 @@ const tabLabels: (TabLabel | TabLabel[])[] = [
 		selector: (guests) => {
 			if (isGuestType(guests)) {
 				const total = Object.keys(guests).reduce<number>(
-					(acc, key) => acc + guests[key as GuestKeyType],
+					(acc, key) => {
+						if (key !== "_type") {
+							return acc + guests[key as GuestKeyType]
+						}
+						 
+						return acc;
+					},
 					0
 				);
-				return total === 0 ? "Thêm khách" : total;
+				return total ? total : undefined
 			}
 		},
 		onValueChangeKey: "onGuestsChange",
@@ -92,12 +98,11 @@ const tabLabels: (TabLabel | TabLabel[])[] = [
 ];
 
 function isGuestType(input: Object): input is GuestType {
-	return (
-		(<GuestType>input).adult != undefined &&
-		(<GuestType>input).child != undefined &&
-		(<GuestType>input).infant != undefined &&
-		(<GuestType>input).pet != undefined
-	);
+	return (<GuestType>input)._type === "guest";
+}
+
+function isDateRangeType(input: Object): input is DateRangeType {
+	return (<DateRangeType>input)._type === "dateRange";
 }
 
 function formatDate(date: Date) {

@@ -11,6 +11,12 @@ import type { TabLabel } from "./tab-labels";
 
 import "./SearchExpand.style.scss";
 import useClickOutside from "@hooks/use-click-outside";
+import {
+	SearchContextType,
+	GuestKeyType,
+	DateRangeType,
+	LocationType,
+} from "_types/props";
 
 export type TabPanelProps = TabLabel & {
 	tabPanelIndex: number;
@@ -34,34 +40,7 @@ const TabPanel = memo((props: TabPanelProps) => {
 		onValueChange,
 	} = props;
 
-	const renderSubLabel = () => {
-		if (hasInputable) {
-			const { value, onValueChange } = props;
-
-			return (
-				<>
-					<input
-						id={inputId}
-						className="sub-label"
-						placeholder={subLabel}
-						value={value}
-						onChange={(e) => onValueChange(e.target.value)}
-						readOnly={!hasInputable}
-					/>
-					{tabPanelIndex === tabLabelIndex && value && (
-						<Button
-							classNames="search-input-clear-btn"
-							onClick={() => {}}
-						>
-							<Icon icon={faXmark} />
-						</Button>
-					)}
-				</>
-			);
-		} else {
-			return <p className="sub-label">{subLabel}</p>;
-		}
-	};
+	const hasClearInputButton = tabPanelIndex === tabLabelIndex && value != undefined;
 
 	return (
 		<div
@@ -76,7 +55,7 @@ const TabPanel = memo((props: TabPanelProps) => {
 				onTabLabelClick(tabLabelIndex);
 			}}
 		>
-			<div>
+			<div className="search-tablabel-inner">
 				<label className="tablabel" htmlFor={inputId}>
 					{label}
 				</label>
@@ -88,10 +67,10 @@ const TabPanel = memo((props: TabPanelProps) => {
 					onChange={(e) => onValueChange(e.target.value)}
 					readOnly={hasInputable ? false : true}
 				/>
-				{tabPanelIndex === tabLabelIndex && value && (
+				{hasClearInputButton && (
 					<Button
 						classNames="search-input-clear-btn"
-						onClick={() => {}}
+						onClick={() => { onValueChange(undefined) }}
 					>
 						<Icon icon={faXmark} />
 					</Button>
@@ -130,7 +109,7 @@ function SearchExpand({
 			onTabLabelClick(-1);
 		}
 	);
-	const searchContext = useSearchContext();
+	const searchContext: SearchContextType = useSearchContext();
 
 	const renderTabLabel = (tabLabel: TabLabel) => {
 		const { inputKey, extraKey, selector, onValueChangeKey } = tabLabel;
@@ -138,11 +117,27 @@ function SearchExpand({
 			? selector(searchContext[inputKey])
 			: searchContext[inputKey];
 
-		const handleValueChange = (value?: any) => {
-			if (extraKey) {
-				searchContext[onValueChangeKey](extraKey, value);
-			} else {
-				searchContext(value);
+		const handleValueChange = (value?: string | Date | number) => {
+			switch (onValueChangeKey) {
+				case "onGuestsChange":
+					searchContext[onValueChangeKey]({
+						key: extraKey as GuestKeyType,
+						value: value as number,
+					});
+					break;
+				case "onDateRangeChange":
+					searchContext[onValueChangeKey]({
+						key: extraKey as keyof Omit<DateRangeType, "_type">,
+						value: value as Date,
+					});
+					break;
+				case "onLocationChange":
+					searchContext[onValueChangeKey](value as string);
+					break;
+				default:
+					throw new Error(
+						`onValueKeyChange: ${onValueChangeKey} not existed in SearchContextType`
+					);
 			}
 		};
 

@@ -25,13 +25,14 @@ export type Image = {
 };
 
 export type DateRangeType = {
+	_type: "dateRange";
 	from?: Date;
 	to?: Date;
 };
 
 export type GuestKeyType = "adult" | "child" | "infant" | "pet";
 
-export type GuestType = Record<GuestKeyType, number>;
+export type GuestType = { _type: "guest" } & Record<GuestKeyType, number>;
 
 export type LocationType = string;
 
@@ -40,8 +41,14 @@ export type SearchContextType = {
 	dateRange: DateRangeType;
 	location: LocationType;
 	onLocationChange: (newLocation: string) => void;
-	onDateRangeChange: (newDateRange: DateRangeType) => void;
-	onGuestsChange: (key: keyof GuestType, value: number) => void;
+	onDateRangeChange: ({ key, value }:{
+		key: keyof Omit<DateRangeType, "_type">,
+		value: Date
+	}) => void;
+	onGuestsChange: ({ key, value }: {
+		key: GuestKeyType,
+		value: number
+	}) => void;
 };
 
 export type FunctionPropertyName<T> = {
@@ -49,5 +56,5 @@ export type FunctionPropertyName<T> = {
 }[keyof T];
 
 export type Handler<T> = {
-    [K in keyof T]: T[K] extends Function ? T[K] : never;
-}[keyof T]
+	[K in keyof T]: T[K] extends Function ? T[K] : never;
+}[keyof T];

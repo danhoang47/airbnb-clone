@@ -7,7 +7,7 @@ import HeaderGroupItem from "@layouts/ui/header-group-item";
 import Footer from "@layouts/default/footer";
 import LogoWithBrandName from "@layouts/ui/logo-with-brand-name";
 import Search from "@features/search";
-import { ContainerProps, SeachContextType } from "_types/props";
+import { ContainerProps, SearchContextType } from "_types/props";
 
 import "./styles.scss";
 import useClickOutside from "@hooks/use-click-outside";
@@ -30,7 +30,7 @@ function DefaultLayout({ children, subContent }: DefaultLayoutProps) {
 		pet: 0,
 	});
 
-	const searchContextValue: SeachContextType = useMemo(
+	const searchContextValue: SearchContextType = useMemo(
 		() => ({
 			guests,
 			location,

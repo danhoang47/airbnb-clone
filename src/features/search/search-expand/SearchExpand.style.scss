@@ -42,7 +42,6 @@
 			animation: scale-in-top 0.05s linear forwards 0.15s;
 
 			&:not(.focused) {
-
 				.search-button {
 					padding: 1rem;
 					width: 44.8px;
@@ -51,7 +50,6 @@
 
 					.search-button-label {
 						display: none;
-
 					}
 				}
 			}
@@ -79,12 +77,11 @@
 				font-weight: 600;
 				cursor: pointer;
 				color: rgba(0, 0, 0, 0.8);
-				position: relative;
 				flex-basis: calc(100% / 3);
 
 				.search-input-clear-btn {
 					position: absolute;
-					right: 1rem;
+					right: 0;
 					top: 50%;
 					translate: 0 -50%;
 					width: 1.6rem;
@@ -100,13 +97,30 @@
 					}
 				}
 
+				.search-tablabel-inner {
+					z-index: 1;
+					position: relative;
+				}
+
+				&.sub-search-tablabel {
+					input {
+						max-width: 78px;
+					}
+				}
+
 				&.search-tablabel-container {
 					padding: 0;
 					display: flex;
 
 					.sub-search-tablabel {
 						flex: 1 0 0;
-						padding: 1rem 2rem; 
+						padding: 1rem 2rem;
+					}
+				}
+
+				&.guest-search-tablabel {
+					.search-input-clear-btn {
+						right: 55%;
 					}
 				}
 
